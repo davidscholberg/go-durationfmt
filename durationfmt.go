@@ -30,48 +30,55 @@ type durationUnit struct {
 // You can place a 0 before the h, m, and s modifiers to zeropad those values to
 // two digits. Zeropadding is undefined for the other modifiers.
 func Format(dur time.Duration, fmtStr string) (string, error) {
-	var durUnits = map[string]*durationUnit{
-		"y": &durationUnit{
+	var durUnitSlice = []durationUnit{
+		durationUnit{
 			DurDivisor: Year,
 		},
-		"w": &durationUnit{
+		durationUnit{
 			DurDivisor: Week,
 		},
-		"d": &durationUnit{
+		durationUnit{
 			DurDivisor: Day,
 		},
-		"h": &durationUnit{
+		durationUnit{
 			DurDivisor: time.Hour,
 		},
-		"m": &durationUnit{
+		durationUnit{
 			DurDivisor: time.Minute,
 		},
-		"s": &durationUnit{
+		durationUnit{
 			DurDivisor: time.Second,
 		},
 	}
+	var durUnitMap = map[string]*durationUnit{
+		"y": &durUnitSlice[0],
+		"w": &durUnitSlice[1],
+		"d": &durUnitSlice[2],
+		"h": &durUnitSlice[3],
+		"m": &durUnitSlice[4],
+		"s": &durUnitSlice[5],
+	}
 
-	sprintfFmt, durCount, err := parseFmtStr(fmtStr, durUnits)
+	sprintfFmt, durCount, err := parseFmtStr(fmtStr, durUnitMap)
 	if err != nil {
 		return "", err
 	}
 
 	durArray := make([]interface{}, durCount)
-	calculateDurUnits(dur, durArray, durUnits)
+	calculateDurUnits(dur, durArray, durUnitSlice)
 
 	return fmt.Sprintf(sprintfFmt, durArray...), nil
 }
 
 // calculateDurUnits takes a duration and breaks it up into its constituent
 // duration unit values.
-func calculateDurUnits(dur time.Duration, durArray []interface{}, durUnits map[string]*durationUnit) {
+func calculateDurUnits(dur time.Duration, durArray []interface{}, durUnitSlice []durationUnit) {
 	remainingDur := dur
 	durCount := 0
-	for _, c := range "ywdhms" {
-		durChar := string(c)
-		if durUnits[durChar].Present {
-			durArray[durCount] = remainingDur / durUnits[durChar].DurDivisor
-			remainingDur = remainingDur % durUnits[durChar].DurDivisor
+	for _, d := range durUnitSlice {
+		if d.Present {
+			durArray[durCount] = remainingDur / d.DurDivisor
+			remainingDur = remainingDur % d.DurDivisor
 			durCount++
 		}
 	}
@@ -81,7 +88,7 @@ func calculateDurUnits(dur time.Duration, durArray []interface{}, durUnits map[s
 // units.
 // parseFmtStr returns a format string that can be passed to fmt.Sprintf and a
 // count of how many duration units are in the format string.
-func parseFmtStr(fmtStr string, durUnits map[string]*durationUnit) (string, int, error) {
+func parseFmtStr(fmtStr string, durUnitMap map[string]*durationUnit) (string, int, error) {
 	modifier, zeropad := false, false
 	sprintfFmt := ""
 	durCount := 0
@@ -95,8 +102,8 @@ func parseFmtStr(fmtStr string, durUnits map[string]*durationUnit) (string, int,
 			}
 			continue
 		}
-		if _, ok := durUnits[fmtChar]; ok {
-			durUnits[fmtChar].Present = true
+		if _, ok := durUnitMap[fmtChar]; ok {
+			durUnitMap[fmtChar].Present = true
 			durCount++
 			if zeropad {
 				sprintfFmt += "%02d"
