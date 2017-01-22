@@ -8,7 +8,7 @@ See the [Caveats](#caveats) section before using this library.
 
 ### Duration Format
 
-The format string format that go-durationfmt uses is similar to that used by [Go's fmt package](https://golang.org/pkg/fmt/#hdr-Printing). The `%` character signifies that the next character is a modifier that specifies a particular duration unit. The following is the full list of modifiers suppoerted by go-durationfmt:
+The format string format that go-durationfmt uses is similar to that used by [Go's fmt package](https://golang.org/pkg/fmt/#hdr-Printing). The `%` character signifies that the next character is a modifier that specifies a particular duration unit. The following is the full list of modifiers supported by go-durationfmt:
 
 * `%y` - # of years
 * `%w` - # of weeks
@@ -18,7 +18,7 @@ The format string format that go-durationfmt uses is similar to that used by [Go
 * `%s` - # of seconds
 * `%%` - print a percent sign
 
-You can place a 0 before the h, m, and s modifiers to zeropad those values to two digits. Zeropadding is undefined for the other modifiers.
+You can place a `0` before the `h`, `m`, and `s` modifiers to zeropad those values to two digits. Zeropadding is undefined for the other modifiers.
 
 #### Format String Examples
 
