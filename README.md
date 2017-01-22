@@ -1,6 +1,6 @@
-## Go-durationfmt
+## go-durationfmt
 
-Go-durationfmt is a [Go](https://golang.org/) library that allows you to format [durations](https://golang.org/pkg/time/#Duration) according to a format string. You can specify years, months, days, hours, minutes, and seconds in the format string.
+go-durationfmt is a [Go](https://golang.org/) library that allows you to format [durations](https://golang.org/pkg/time/#Duration) according to a format string. You can specify years, months, days, hours, minutes, and seconds in the format string.
 
 See the [Duration Format](#duration-format) section for an explanation of the format string rules.
 
