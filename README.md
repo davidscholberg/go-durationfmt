@@ -24,14 +24,12 @@ You can place a 0 before the h, m, and s modifiers to zeropad those values to tw
 
 The following examples show how a duration of 42 hours, 4 minutes, and 2 seconds will be formatted with various format strings:
 
-+------------------------+--------------------+
 | Format string          | Output             |
-+------------------------+--------------------+
+|------------------------|--------------------|
 | `%d days, %h hours`    | `1 days, 18 hours` |
 | `%m minutes`           | `2524 minutes`     |
 | `%s seconds`           | `151442 seconds`   |
 | `%d days, %0h:%0m:%0s` | `1 days, 18:04:02` |
-+------------------------+--------------------+
 
 ### Get
 
