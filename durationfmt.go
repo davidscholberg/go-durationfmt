@@ -55,6 +55,9 @@ func Format(dur time.Duration, fmtStr string) (string, error) {
 		{
 			DurDivisor: time.Microsecond,
 		},
+		{
+			DurDivisor: time.Nanosecond,
+		},
 	}
 	var durUnitMap = map[string]*durationUnit{
 		"y": &durUnitSlice[0],
@@ -65,6 +68,7 @@ func Format(dur time.Duration, fmtStr string) (string, error) {
 		"s": &durUnitSlice[5],
 		"i": &durUnitSlice[6],
 		"c": &durUnitSlice[7],
+		"n": &durUnitSlice[8],
 	}
 
 	sprintfFmt, durCount, err := parseFmtStr(fmtStr, durUnitMap)
