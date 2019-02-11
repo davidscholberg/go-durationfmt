@@ -31,23 +31,29 @@ type durationUnit struct {
 // two digits. Zeropadding is undefined for the other modifiers.
 func Format(dur time.Duration, fmtStr string) (string, error) {
 	var durUnitSlice = []durationUnit{
-		durationUnit{
+		{
 			DurDivisor: Year,
 		},
-		durationUnit{
+		{
 			DurDivisor: Week,
 		},
-		durationUnit{
+		{
 			DurDivisor: Day,
 		},
-		durationUnit{
+		{
 			DurDivisor: time.Hour,
 		},
-		durationUnit{
+		{
 			DurDivisor: time.Minute,
 		},
-		durationUnit{
+		{
 			DurDivisor: time.Second,
+		},
+		{
+			DurDivisor: time.Millisecond,
+		},
+		{
+			DurDivisor: time.Microsecond,
 		},
 	}
 	var durUnitMap = map[string]*durationUnit{
@@ -57,6 +63,8 @@ func Format(dur time.Duration, fmtStr string) (string, error) {
 		"h": &durUnitSlice[3],
 		"m": &durUnitSlice[4],
 		"s": &durUnitSlice[5],
+		"i": &durUnitSlice[6],
+		"c": &durUnitSlice[7],
 	}
 
 	sprintfFmt, durCount, err := parseFmtStr(fmtStr, durUnitMap)
