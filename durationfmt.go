@@ -26,6 +26,9 @@ type durationUnit struct {
 // %h - # of hours
 // %m - # of minutes
 // %s - # of seconds
+// %i - # of milliseconds
+// %c - # of microseconds
+// %n - # of nanoseconds
 // %% - print a percent sign
 // You can place a 0 before the h, m, and s modifiers to zeropad those values to
 // two digits. Zeropadding is undefined for the other modifiers.
