@@ -9,6 +9,7 @@ import (
 
 const Day = 24 * time.Hour
 const Week = 7 * Day
+const Month = 30 * Day
 const Year = 365 * Day
 
 // durationUnit represets a possible duration unit. A durationUnit object
@@ -21,6 +22,7 @@ type durationUnit struct {
 
 // Format formats the given duration according to the given format string.
 // %y - # of years
+// %o - # of months
 // %w - # of weeks
 // %d - # of days
 // %h - # of hours
@@ -36,6 +38,9 @@ func Format(dur time.Duration, fmtStr string) (string, error) {
 	var durUnitSlice = []durationUnit{
 		{
 			DurDivisor: Year,
+		},
+		{
+			DurDivisor: Month,
 		},
 		{
 			DurDivisor: Week,
@@ -64,14 +69,15 @@ func Format(dur time.Duration, fmtStr string) (string, error) {
 	}
 	var durUnitMap = map[string]*durationUnit{
 		"y": &durUnitSlice[0],
-		"w": &durUnitSlice[1],
-		"d": &durUnitSlice[2],
-		"h": &durUnitSlice[3],
-		"m": &durUnitSlice[4],
-		"s": &durUnitSlice[5],
-		"i": &durUnitSlice[6],
-		"c": &durUnitSlice[7],
-		"n": &durUnitSlice[8],
+		"o": &durUnitSlice[1],
+		"w": &durUnitSlice[2],
+		"d": &durUnitSlice[3],
+		"h": &durUnitSlice[4],
+		"m": &durUnitSlice[5],
+		"s": &durUnitSlice[6],
+		"i": &durUnitSlice[7],
+		"c": &durUnitSlice[8],
+		"n": &durUnitSlice[9],
 	}
 
 	sprintfFmt, durCount, err := parseFmtStr(fmtStr, durUnitMap)
